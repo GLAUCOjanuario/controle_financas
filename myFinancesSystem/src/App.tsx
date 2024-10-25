@@ -18,13 +18,12 @@ function App() {
           name: movement.name,
           value: movement.value,
           type: movement.type,
-          id: Math.random().toString(), // Corrigido
+          id: Math.random().toString(),
         });
-
         return movements; // Retorna o array atualizado
       });
 
-      // Atualiza o saldo com base no tipo de movimentação (Input)
+      // Atualiza o saldo com base no tipo de movimentação
       if (movement.type === "Input") {
         setCurrentBalance((prevBalance) => prevBalance + Number(movement.value));
       }
@@ -32,8 +31,11 @@ function App() {
       if (movement.type === "Output") {
         setCurrentExpenses((prevExpenses) => prevExpenses + Number(movement.value));
 
-        if (currentBalance > 0) {
+        // Verifica se o saldo é maior que o valor a ser subtraído
+        if (currentBalance >= Number(movement.value)) {
           setCurrentBalance((prevBalance) => prevBalance - Number(movement.value));
+        } else {
+          setCurrentBalance(0); // Define o saldo como zero se o valor a ser subtraído é maior
         }
       }
     }
@@ -42,7 +44,11 @@ function App() {
   return (
     <div>
       <Header />
-      <FinanceControl balance={currentBalance} expenses={currentExpenses} handleSetMovement={setNewMovement} />
+      <FinanceControl
+        balance={currentBalance} 
+        expenses={currentExpenses}
+        handleSetMovement={setNewMovement} 
+      />
     </div>
   );
 }

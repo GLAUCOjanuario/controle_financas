@@ -1,23 +1,27 @@
+import { FinanceControlProps } from "../../models/interfaces/FinanceControlProps/FinanceControlProps";
 import { Movement } from "../../models/interfaces/Movements/Movement";
+import Balance from "../Balance/Balance";
+import "./FinanceControl.css";
 
-interface FinanceControlProps {
-    balance: number;
-    expenses: number;
-    handleSetMovement: (movement: Movement) => void;
-  }
-  
-  const FinanceControl = ({ balance, expenses, handleSetMovement }: FinanceControlProps) => {
-    return (
-      <div>
-        <h2>Current Balance: {balance}</h2>
-        <h2>Current Expenses: {expenses}</h2>
-        {/* Aqui você pode ter uma função para adicionar movimentações */}
-        <button onClick={() => handleSetMovement({ name: 'New Movement', value: 100, type: 'Input', id: '123' })}>
-          Add Movement
-        </button>
-      </div>
-    );
-  };
-  
-  export default FinanceControl;
-  
+const FinanceControl = ({
+  balance,
+  expenses,
+  handleSetMovement,
+}: FinanceControlProps) => {
+
+    const receiveNewMovement = (movement:Movement) =>{
+        movement && handleSetMovement(movement);
+    };
+
+
+
+  return (
+    <div className="container_finances">
+        <Balance currentBalance={balance} emitMovement={receiveNewMovement}/>
+
+    </div>
+    
+  );
+};
+
+export default FinanceControl;
