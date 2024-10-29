@@ -69,14 +69,15 @@ const Expense = ({
             <FontAwesomeIcon icon={faPercent} color="#E43F3D" size="2x" />
             <h2>Despesas</h2>
           </header>
-          <h3>{currentExpenses > 0? currentExpenses:"R$0"}</h3>
+          <h3>{currentExpenses > 0 ? currentExpenses:"R$0"}</h3>
           {!renderInputForm && (
             <Button
-            action={renderInputForm}
+            action={handleRenderInputForm} // Passando a função correta
             title="Saída"
             priority="Output"
             disable={currentBalance === 0}
-            />
+          />
+          
           )}
 
           {renderInputForm && (
@@ -99,6 +100,25 @@ const Expense = ({
                    value={inputValue}
                    onChange={handleInputValueForm}/>
 
+              </div>
+              <div className="actions_form_buttons_container">
+                <Button
+                  title="Cancelar"
+                  priority="Output"
+                  action={hideInputForm}
+                 
+                />
+               
+
+                <Button
+                  title="Cancelar"
+                  priority="Output"
+                  action={hideInputForm}
+                  type="submit"
+                  
+                 
+                  
+                />
               </div>
             </form>)}
 

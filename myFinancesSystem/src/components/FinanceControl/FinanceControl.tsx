@@ -11,7 +11,7 @@ const FinanceControl = ({
 }: FinanceControlProps) => {
   
   const receiveNewMovement = (movement: Movement) => {
-    handleSetMovement(movement);
+    movement && handleSetMovement(movement);
   };
 
   return (
