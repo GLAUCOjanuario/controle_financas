@@ -67,7 +67,6 @@ const Expense = ({
   };
 
   return (
-    <div>
       <Container>
         <Card>
           <CardHeader>
@@ -119,7 +118,6 @@ const Expense = ({
           )}
         </Card>
       </Container>
-    </div>
   );
 };
 

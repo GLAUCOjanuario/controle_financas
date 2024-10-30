@@ -5,7 +5,7 @@ import "./Movements.css";
 
 const Movements = ({ movementsList }: MovementsProps) => {
   return (
-    <div>
+    <>
       <header className="movements_header">
         <FontAwesomeIcon icon={faMoneyBillTransfer} color="#7af1a7" size="2x" />
         <h2>{`${
@@ -32,7 +32,7 @@ const Movements = ({ movementsList }: MovementsProps) => {
             </div>
           </div>
         ))}
-    </div>
+    </>
   );
 };
 
