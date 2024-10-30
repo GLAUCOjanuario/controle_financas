@@ -1,6 +1,5 @@
-import {Movement} from  "../Movement/Movement";
+import { Movement } from "../Movement/Movement";
 
 export interface MovementsProps {
-    movementsList: Array<Movement>;
-
+  movementsList: Array<Movement>;
 }
