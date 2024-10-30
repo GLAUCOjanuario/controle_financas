@@ -1,9 +1,7 @@
-import {Movement} from '../Movements/Movement'
-
+import { Movement } from "../Movement/Movement";
 
 export interface ExpenseProps {
-    emiteMovement: (movement:Movement)  => void;
-    currentExpenses: number;
-    curranteBalance: number;
-
+  emitMovement: (movement: Movement) => void;
+  currentExpenses: number;
+  currentBalance: number;
 }

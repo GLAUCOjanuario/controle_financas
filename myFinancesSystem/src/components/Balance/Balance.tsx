@@ -1,9 +1,10 @@
-import { useState } from "react";
-import { BalanceProps } from "../../models/interfaces/BalanceProps/BalanceProps";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDollar } from "@fortawesome/free-solid-svg-icons";
-import "./Balance.css";
+import { BalanceProps } from "../../models/interfaces/BalanceProps/BalanceProps";
 import Button from "../Button/Button";
+import "./Balance.css";
+import { FormatMoney } from "../../utils/utils";
 
 const Balance = ({ emitMovement, currentBalance }: BalanceProps) => {
   const [renderInputForm, setRenderInputForm] = useState(false);
@@ -11,7 +12,7 @@ const Balance = ({ emitMovement, currentBalance }: BalanceProps) => {
   const [inputName, setInputName] = useState("");
   const [inputValue, setInputValue] = useState("");
 
-  const toggleInputForm = () => setRenderInputForm(!renderInputForm);
+  const handleRenderInputForm = () => setRenderInputForm(!false);
 
   const hideInputForm = () => {
     setRenderInputForm(false);
@@ -22,6 +23,7 @@ const Balance = ({ emitMovement, currentBalance }: BalanceProps) => {
 
   const formSubmitHandler = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
     if (inputName.trim().length === 0 || inputValue.trim().length === 0) {
       setIsFormValid(false);
       return;
@@ -35,16 +37,18 @@ const Balance = ({ emitMovement, currentBalance }: BalanceProps) => {
     });
   };
 
-  const handleInputNameForm = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const eventValue = event.target.value;
+  const handleInputNameForm = (event: React.FormEvent<HTMLInputElement>) => {
+    const eventTarget = event.currentTarget as HTMLInputElement;
+    const eventValue = eventTarget.value;
+    inputName.trim().length > 0 ? setIsFormValid(true) : setIsFormValid(false);
     setInputName(eventValue);
-    setIsFormValid(eventValue.trim().length > 0 && inputValue.trim().length > 0);
   };
 
-  const handleInputValueForm = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const eventValue = event.target.value;
+  const handleInputValueForm = (event: React.FormEvent<HTMLInputElement>) => {
+    const eventTarget = event.currentTarget as HTMLInputElement;
+    const eventValue = eventTarget.value;
+    inputValue.trim().length > 0 ? setIsFormValid(true) : setIsFormValid(false);
     setInputValue(eventValue);
-    setIsFormValid(inputName.trim().length > 0 && eventValue.trim().length > 0);
   };
 
   return (
@@ -55,17 +59,24 @@ const Balance = ({ emitMovement, currentBalance }: BalanceProps) => {
             <FontAwesomeIcon icon={faDollar} color="#7af1a7" size="2x" />
             <h2>Saldo</h2>
           </header>
-          <h3>{currentBalance > 0 ? `R$ ${currentBalance}` : "R$ 0"}</h3>
+
+          <h3> {currentBalance > 0 ? FormatMoney(String(currentBalance)) : "R$ 0"} </h3>
+
           {!renderInputForm && (
             <Button
-              action={toggleInputForm}
+              action={handleRenderInputForm}
               title="Entrada"
               priority="Input"
             />
           )}
+
           {renderInputForm && (
             <form onSubmit={formSubmitHandler}>
-              <div className={`input_form_container ${!isFormValid ? "invalid" : ""}`}>
+              <div
+                className={`input_form_container ${
+                  !isFormValid ? "invalid" : ""
+                }`}
+              >
                 <input
                   type="text"
                   placeholder="Nome"
@@ -86,14 +97,8 @@ const Balance = ({ emitMovement, currentBalance }: BalanceProps) => {
                   title="Cancelar"
                   priority="Output"
                   action={hideInputForm}
-                 
                 />
-                  <Button
-                  title="Adicionar"
-                  priority="Input"
-                 type="submit"
-                 
-                />
+                <Button title="Adicionar" priority="Input" type="submit" />
               </div>
             </form>
           )}
